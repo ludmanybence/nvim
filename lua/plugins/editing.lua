@@ -79,5 +79,12 @@ return {
             { "<leader>xq", function() require("trouble").open("quickfix") end,              desc = "Open Quickfix list" },
             { "<leader>xl", function() require("trouble").open("loclist") end,               desc = "Open Location list" },
         }
+    },
+    {
+        'mbbill/undotree',
+        keys = {
+            { "<leader>u", ":UndotreeToggle<CR>", desc = "Toggle Undo tree" }
+
+        }
     }
 }
