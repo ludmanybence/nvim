@@ -26,10 +26,11 @@ return {
                 },
                 filters = {
                     dotfiles = false,
+                    custom = { '.git' }
                 },
                 git = {
                     enable = true,
-                    ignore = false,
+                    ignore = true,
                     timeout = 500,
                 },
                 update_focused_file = {
