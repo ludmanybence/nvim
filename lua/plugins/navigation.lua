@@ -2,16 +2,20 @@ return {
     {
         "ThePrimeagen/harpoon",
         config = function()
-            vim.keymap.set("n", "<leader>a", require("harpoon.mark").add_file)
-            vim.keymap.set("n", "<C-e>", require("harpoon.ui").toggle_quick_menu)
             for i = 1, 9 do
                 vim.keymap.set("n", "<leader>" .. i, function() require("harpoon.ui").nav_file(i) end)
             end
-        end
+        end,
+        keys = {
+            { "<leader>a", function() require("harpoon.mark").add_file() end,        desc = "Set marker at current file" },
+            { "<C-e>",     function() require("harpoon.ui").toggle_quick_menu() end, desc = "Open Harpoon UI" }
+
+        }
     },
     {
         "nvim-tree/nvim-tree.lua",
         version = "*",
+        lazy = false,
         dependencies = {
             "nvim-tree/nvim-web-devicons"
         },
@@ -37,9 +41,10 @@ return {
                     enable = true,
                 }
             })
-
-            vim.keymap.set("n", "<C-n>", vim.cmd.NvimTreeToggle)
-        end
+        end,
+        keys = {
+            { '<C-n>', ':NvimTreeToggle<cr>', desc = 'Toggle NvimTree' },
+        }
     },
     {
         'nvim-telescope/telescope.nvim',
@@ -103,29 +108,28 @@ return {
             end
 
             vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
-
-            -- See `:help telescope.builtin`
-            vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles,
-                { desc = '[?] Find recently opened files' })
-            vim.keymap.set('n', '<leader>b', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-            vim.keymap.set('n', '<leader>/', function()
-                -- You can pass additional configuration to telescope to change theme, layout, etc.
-                require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-                    winblend = 10,
-                    previewer = false,
-                })
-            end, { desc = '[/] Fuzzily search in current buffer' })
-
-            vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
-            vim.keymap.set('n', '<leader>pf', require('telescope.builtin').find_files, { desc = '[P]roject [F]iles' })
-            vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-            vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string,
-                { desc = '[S]earch current [W]ord' })
-            vim.keymap.set('n', '<leader>ps', require('telescope.builtin').live_grep, { desc = '[P]roject [S]earch' })
-            vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by [G]rep on Git Root' })
-            vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics,
-                { desc = '[S]earch [D]iagnostics' })
-            vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
-        end
+        end,
+        keys = { -- See `:help telescope.builtin`
+            { '<leader>?',  function() require('telescope.builtin').oldfiles() end,    desc = '[?] Find recently opened files' },
+            { '<leader>b',  function() require('telescope.builtin').buffers() end,     desc = '[ ] Find existing buffers' },
+            { '<leader>gf', function() require('telescope.builtin').git_files() end,   desc = 'Search [G]it [F]iles' },
+            { '<leader>pf', function() require('telescope.builtin').find_files() end,  desc = '[P]roject [F]iles' },
+            { '<leader>sh', function() require('telescope.builtin').help_tags() end,   desc = '[S]earch [H]elp' },
+            { '<leader>sw', function() require('telescope.builtin').grep_string() end, desc = '[S]earch current [W]ord' },
+            { '<leader>ps', function() require('telescope.builtin').live_grep() end,   desc = '[P]roject [S]earch' },
+            { '<leader>sG', ':LiveGrepGitRoot<cr>',                                    desc = '[S]earch by [G]rep on Git Root' },
+            { '<leader>sd', function() require('telescope.builtin').diagnostics() end, desc = '[S]earch [D]iagnostics' },
+            { '<leader>sr', function() require('telescope.builtin').resume() end,      desc = '[S]earch [R]esume' },
+            {
+                '<leader>/',
+                function()
+                    require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+                        winblend = 10,
+                        previewer = false,
+                    })
+                end,
+                desc = '[/] Fuzzily search in current buffer'
+            },
+        },
     },
 }
