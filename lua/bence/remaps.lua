@@ -12,8 +12,6 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
 -- Terminal
-vim.keymap.set("n", "<leader>t", ":FloatermToggle<CR>")
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>:FloatermToggle<CR>")
 vim.keymap.set("t", "<Cmd-c>", [["+y]])
 
 -- Yank into clipboard
@@ -38,7 +36,6 @@ vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end);
 
--- I will not repent
 function TabCompletion()
     if vim.fn.pumvisible() == 1 then
         return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-y>", true, true, true), "n", true)
@@ -49,9 +46,3 @@ end
 
 vim.api.nvim_set_keymap('i', '<Tab>', 'TabCompletion()', { noremap = true, expr = true, silent = true })
 
--- folke/trouble
-vim.keymap.set("n", "<leader>xx", function() require("trouble").open() end)
-vim.keymap.set("n", "<leader>xw", function() require("trouble").open("workspace_diagnostics") end)
-vim.keymap.set("n", "<leader>xd", function() require("trouble").open("document_diagnostics") end)
-vim.keymap.set("n", "<leader>xq", function() require("trouble").open("quickfix") end)
-vim.keymap.set("n", "<leader>xl", function() require("trouble").open("loclist") end)

@@ -68,4 +68,16 @@ return {
             map_c_w = false,
         }
     },
+    {
+        "folke/trouble.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = {},
+        keys = {
+            { "<leader>xx", function() require("trouble").open() end,                        desc = "Open" },
+            { "<leader>xw", function() require("trouble").open("workspace_diagnostics") end, desc = "Open Workspace Diagnostics" },
+            { "<leader>xd", function() require("trouble").open("document_diagnostics") end,  desc = "Open Document Diagnostics" },
+            { "<leader>xq", function() require("trouble").open("quickfix") end,              desc = "Open Quickfix list" },
+            { "<leader>xl", function() require("trouble").open("loclist") end,               desc = "Open Location list" },
+        }
+    }
 }
