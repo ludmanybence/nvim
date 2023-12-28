@@ -35,14 +35,3 @@ vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end);
-
-function TabCompletion()
-    if vim.fn.pumvisible() == 1 then
-        return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-y>", true, true, true), "n", true)
-    else
-        return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, true, true), "n", true)
-    end
-end
-
-vim.api.nvim_set_keymap('i', '<Tab>', 'TabCompletion()', { noremap = true, expr = true, silent = true })
-
