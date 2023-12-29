@@ -66,5 +66,10 @@ return {
                 enable_tailwind = true
             }
         end
+    },
+    { "folke/zen-mode.nvim" },
+    {
+        "folke/twilight.nvim",
+        opts = {}
     }
 }
