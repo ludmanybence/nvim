@@ -9,7 +9,7 @@ return {
                     ['<C-f>'] = cmp.mapping.scroll_docs(4),
                     ['<C-Space>'] = cmp.mapping.complete(),
                     ['<C-e>'] = cmp.mapping.abort(),
-                    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
                     ['<Tab>'] = function(fallback)
                         if cmp.visible() then
                             cmp.confirm({ select = true })
@@ -19,7 +19,28 @@ return {
                     end
 
                 }),
+                snippet = {
+                    expand = function(args)
+                        require 'luasnip'.lsp_expand(args.body)
+                    end
+                },
+                sources = {
+                    { name = 'luasnip' },
+                },
             })
+        end
+    },
+    {
+        "L3MON4D3/LuaSnip",
+        dependencies = {
+            "rafamadriz/friendly-snippets",
+            'avneesh0612/react-nextjs-snippets'
+        },
+        config = function()
+            require("luasnip.loaders.from_vscode").lazy_load()
+
+            require('luasnip').filetype_extend("typescript", { "typescriptreact" })
+            require('luasnip').config.setup {}
         end
     },
     {
@@ -32,17 +53,15 @@ return {
             },
             { 'williamboman/mason-lspconfig.nvim' },
             { 'neovim/nvim-lspconfig' },
-
             { 'hrsh7th/nvim-cmp' },
             { 'hrsh7th/cmp-buffer' },
             { 'hrsh7th/cmp-path' },
-            { 'saadparwaiz1/cmp_luasnip' },
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'hrsh7th/cmp-nvim-lua' },
             { "petertriho/cmp-git" },
             { "hrsh7th/cmp-nvim-lsp-signature-help" },
-
             { 'L3MON4D3/LuaSnip' },
+            { 'saadparwaiz1/cmp_luasnip' },
         },
         config = function()
             local lsp_zero = require('lsp-zero')
