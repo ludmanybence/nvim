@@ -16,7 +16,14 @@ return {
         dependencies = {
             "MunifTanjim/nui.nvim",
             "rcarriga/nvim-notify",
-        }
+        },
+        config = function()
+            require("noice").setup({
+                presets = {
+                    command_palette = true
+                }
+            })
+        end
     },
     {
         'nvim-lualine/lualine.nvim',
@@ -26,7 +33,7 @@ return {
         opts = {
             options = {
                 icons_enabled = false,
-                theme = 'nightfox',
+                theme = 'everforest',
                 component_separators = '|',
                 section_separators = '',
             },
@@ -50,6 +57,14 @@ return {
                     }
                 }
             })
+        end
+    },
+    {
+        'brenoprata10/nvim-highlight-colors',
+        config = function()
+            require('nvim-highlight-colors').setup {
+                enable_tailwind = true
+            }
         end
     }
 }
