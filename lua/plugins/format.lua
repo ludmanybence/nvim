@@ -11,5 +11,14 @@ return {
             })
         end
     },
-    { 'sbdchd/neoformat' }
+    {
+        'sbdchd/neoformat',
+        config = function()
+            vim.cmd [[
+                 autocmd BufWritePre *.js,*.ts,*.tsx,*.svelte,*.jsx Neoformat
+            ]]
+
+            vim.g.neoformat_try_node_exe = 1
+        end
+    }
 }
