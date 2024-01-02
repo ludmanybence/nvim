@@ -65,6 +65,7 @@ return {
             { "hrsh7th/cmp-nvim-lsp-signature-help" },
             { 'L3MON4D3/LuaSnip' },
             { 'saadparwaiz1/cmp_luasnip' },
+            { 'Hoffs/omnisharp-extended-lsp.nvim' },
         },
         config = function()
             local lsp_zero = require('lsp-zero')
@@ -83,6 +84,10 @@ return {
                 vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
                 vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
             end)
+
+            require('mason').setup({
+                PATH = "prepend"
+            })
 
             require('mason-lspconfig').setup({
                 ensure_installed = {},
@@ -115,7 +120,14 @@ return {
                                 },
                             }
                         }
-                    end
+                    end,
+                    omnisharp = function()
+                        require 'lspconfig'.omnisharp.setup {
+                            handlers = {
+                                ["textDocument/definition"] = require('omnisharp_extended').handler,
+                            },
+                        }
+                    end,
                 },
             })
         end
