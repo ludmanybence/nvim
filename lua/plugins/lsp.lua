@@ -24,9 +24,12 @@ return {
                         require 'luasnip'.lsp_expand(args.body)
                     end
                 },
-                sources = {
-                    { name = 'luasnip' },
-                },
+                sources = cmp.config.sources({
+                    { name = 'nvim_lsp' },
+                    { name = 'luasnip' }, -- For luasnip users.
+                }, {
+                    { name = 'buffer' },
+                })
             })
         end
     },
@@ -81,28 +84,38 @@ return {
                 vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
             end)
 
-            require('lspconfig').lua_ls.setup({
-                settings = {
-                    Lua = {
-                        diagnostics = {
-                            globals = { 'vim' }
-                        }
-                    }
-                }
-            })
-
-            require('mason').setup({})
             require('mason-lspconfig').setup({
-                ensure_installed = {
-                    'lua_ls',
-                    'vimls',
-                    'tsserver',
-                    'jsonls',
-                    'rust_analyzer',
-                    'omnisharp',
-                },
+                ensure_installed = {},
                 handlers = {
                     lsp_zero.default_setup,
+                    tsserver = function()
+                        require('lspconfig').tsserver.setup({})
+                    end,
+                    lua_ls = function()
+                        require('lspconfig').lua_ls.setup({
+                            settings = {
+                                Lua = {
+                                    diagnostics = {
+                                        globals = { 'vim' }
+                                    }
+                                }
+                            }
+                        })
+                    end,
+                    emmet_ls = function()
+                        require 'lspconfig'.emmet_ls.setup {
+                            filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug",
+                                "typescriptreact", "vue" },
+                            init_options = {
+                                html = {
+                                    options = {
+                                        -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+                                        ["bem.enabled"] = true,
+                                    },
+                                },
+                            }
+                        }
+                    end
                 },
             })
         end
