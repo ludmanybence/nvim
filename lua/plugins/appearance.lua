@@ -14,6 +14,15 @@ return {
         end
     },
     {
+        "folke/tokyonight.nvim"
+    },
+    {
+        "ellisonleao/gruvbox.nvim"
+    },
+    {
+        "catppuccin/nvim"
+    },
+    {
         "xiyaowong/transparent.nvim",
         priority = 1000,
         config = function()
@@ -27,22 +36,35 @@ return {
                     'Normal', 'NormalNC', 'Comment', 'Constant', 'Special', 'Identifier',
                     'Statement', 'PreProc', 'Type', 'Underlined', 'Todo', 'String', 'Function',
                     'Conditional', 'Repeat', 'Operator', 'Structure', 'LineNr', 'NonText',
-                    'SignColumn', 'CursorLine', 'CursorLineNr', 'StatusLine', 'StatusLineNC',
-                    'EndOfBuffer'
+                    'SignColumn', 'CursorLine', 'CursorLineNr', 'EndOfBuffer'
                 },
                 extra_groups = {
+                    'StatusLine'
                     -- 'NvimTreeNormal',
                     -- 'NvimTreeNormalNC',
                     -- 'NvimTreeRepeat',
                     -- 'NvimTreeNonText',
                     -- 'NvimTreeEndOfBuffer',
                     -- "NormalFloat"
-                },                   -- table: additional groups that should be cleared
+                }, -- table: additional groups that should be cleared
                 exclude_groups = {
 
                     'NvimTreeCursorLine'
                 }, -- table: groups you don't want to clear
             })
         end
+    },
+    {
+        "RRethy/vim-illuminate",
+        opts = {
+            delay = 200,
+            large_file_cutoff = 2000,
+            large_file_overrides = {
+                providers = { "lsp" },
+            },
+        },
+        config = function()
+            require("illuminate").configure()
+        end,
     }
 }

@@ -19,16 +19,37 @@ return {
         },
         config = function()
             require("noice").setup({
+                lsp = {
+                    hover = {
+                        silent = true,
+                    },
+                    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+                    override = {
+                        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                        ["vim.lsp.util.stylize_markdown"] = true,
+                        ["cmp.entry.get_documentation"] = true,
+                    },
+                },
+                messages = {
+                    enabled = false
+                },
+                -- you can enable a preset for easier configuration
                 presets = {
-                    command_palette = true
-                }
+                    bottom_search = false,        -- use a classic bottom cmdline for search
+                    command_palette = true,       -- position the cmdline and popupmenu together
+                    long_message_to_split = true, -- long messages will be sent to a split
+                    inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+                    lsp_doc_border = false,       -- add a border to hover docs and signature help
+                },
             })
         end
     },
     {
         'nvim-lualine/lualine.nvim',
         dependencies = {
-            "folke/noice.nvim",
+            'nvim-tree/nvim-web-devicons',
+            'AndreM222/copilot-lualine',
+            { 'glepnir/nerdicons.nvim', cmd = 'NerdIcons', config = function() require('nerdicons').setup({}) end }
         },
         opts = {
             options = {
@@ -37,27 +58,36 @@ return {
                 component_separators = '|',
                 section_separators = '',
             },
-        },
-        config = function()
-            require("lualine").setup({
-                sections = {
-                    lualine_x = {
-                        {
-                            require("noice").api.statusline.mode.get,
-                            cond = require("noice").api.statusline.mode.has,
-                            color = { fg = "#ff9e64" },
-                        }
+            sections = {
+                lualine_a = { 'mode' },
+                lualine_b = { 'branch' },
+                lualine_c = { 'filename' },
+                lualine_x = {
+                    {
+                        'copilot',
+                        symbols = {
+                            status = {
+                                hl = {
+                                    enabled = "#50FA7B",
+                                    sleep = "#AEB7D0",
+                                    disabled = "#6272A4",
+                                    warning = "#FFB86C",
+                                    unknown = "#FF5555"
+                                }
+                            },
+                            spinners = require("copilot-lualine.spinners").dots,
+                            spinner_color = "#6272A4"
+                        },
+                        show_colors = false,
+                        show_loading = true
                     },
-                    lualine_c = {
-                        {
-                            'filename',
-                            file_status = true,
-                            path = 1
-                        }
-                    }
-                }
-            })
-        end
+                    'encoding',
+                    'fileformat',
+                    'filetype' },
+                lualine_y = { 'progress' },
+                lualine_z = { 'location' }
+            },
+        }
     },
     {
         'brenoprata10/nvim-highlight-colors',
