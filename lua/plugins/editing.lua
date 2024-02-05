@@ -44,7 +44,16 @@ return {
     {
         'tpope/vim-surround'
     },
-    { 'numToStr/Comment.nvim', opts = {} },
+    {
+        'JoosepAlviste/nvim-ts-context-commentstring',
+        dependencies = {
+            'numToStr/Comment.nvim',
+        },
+    },
+    {
+        'numToStr/Comment.nvim',
+        opts = {}
+    },
     {
         "folke/trouble.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -64,5 +73,62 @@ return {
 
         }
     },
-    { 'Raimondi/delimitMate' }
+    { 'Raimondi/delimitMate' },
+    {
+        "zbirenbaum/copilot.lua",
+        dependencies = {
+            { 'AndreM222/copilot-lualine' }
+        },
+        event = "InsertEnter",
+        config = function()
+            require("copilot").setup({
+                -- panel = {
+                --     enabled = true,
+                --     auto_refresh = true,
+                -- },
+                --  panel = {
+                panel = {
+                    enabled = false,
+                    auto_refresh = false,
+                    keymap = {
+                        jump_prev = "[[",
+                        jump_next = "]]",
+                        accept = "<CR>",
+                        refresh = "gr",
+                        open = "<M-CR>"
+                    },
+                    layout = {
+                        position = "bottom", -- | top | left | right
+                        ratio = 0.4
+                    },
+                },
+                suggestion = {
+                    enabled = true,
+                    auto_trigger = true,
+                    debounce = 75,
+                    keymap = {
+                        accept = "<C-l>",
+                        accept_word = false,
+                        accept_line = false,
+                        next = "<M-]>",
+                        prev = "<M-[>",
+                        dismiss = "<C-]>",
+                    }
+                },
+                filetypes = {
+                    yaml = false,
+                    markdown = false,
+                    help = false,
+                    gitcommit = false,
+                    gitrebase = false,
+                    hgcommit = false,
+                    svn = false,
+                    cvs = false,
+                    ["."] = false,
+                },
+                copilot_node_command = 'node',
+                server_opts_overrides = {},
+            })
+        end
+    }
 }
