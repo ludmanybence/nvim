@@ -109,7 +109,7 @@ return {
                     end,
                     emmet_ls = function()
                         require 'lspconfig'.emmet_ls.setup {
-                            filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug",
+                            filetypes = { "css", "eruby", "html", "javascriptreact", "less", "sass", "scss", "svelte", "pug",
                                 "typescriptreact", "vue" },
                             init_options = {
                                 html = {
