@@ -20,6 +20,7 @@ return {
       'rcarriga/nvim-notify',
     },
     config = function()
+      vim.keymap.set('n', '<leader>nd', '<cmd>NoiceDismiss<CR>', { desc = 'Dismiss Noice notifications' })
       require('noice').setup {
         lsp = {
           hover = {
@@ -56,6 +57,15 @@ return {
                 },
               },
             },
+          },
+          progress = {
+            enabled = false, -- Disable LSP progress to avoid roslyn.nvim conflicts
+          },
+          signature = {
+            enabled = false,
+          },
+          message = {
+            enabled = true,
           },
         },
         messages = {
